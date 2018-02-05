@@ -26,7 +26,7 @@ public class Databake {
 	private ResultSet rs = null;
 
 	public Databake(String Filename) {
-		/*
+		/**
 		 * Creates the Requirements to Interact with a Database file. This will
 		 * automatically create the Database file if it does not already exist.
 		 * 
@@ -86,7 +86,7 @@ public class Databake {
 	}
 	
 	public void ExecuteStatement(String sql) {
-		/*
+		/**
 		 * Execute an sql query with no returns
 		 * @Param sql A String of SQL to execute
 		 */
@@ -99,10 +99,11 @@ public class Databake {
 	}
 	
 	public ResultSet ExecuteQuery(String sql, boolean Print) {
-		/*
+		/**
 		 * Execute a returnable Query
 		 * @param sql A string of SQL to execute
 		 * @param print Boolean: Print to console the results of sql (Default: false)
+		 * @return ResultSet
 		 */
 		if (!Print) {
 			Print = false;
