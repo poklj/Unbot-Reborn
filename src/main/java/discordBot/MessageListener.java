@@ -6,11 +6,13 @@ import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.ChannelType;
 import net.dv8tion.jda.core.events.message.MessageDeleteEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.core.*;
 import net.dv8tion.jda.core.exceptions.RateLimitedException;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 public class MessageListener extends ListenerAdapter {
+	private static boolean print = true;
 	public static void main(String[] args) throws LoginException, RateLimitedException, InterruptedException {
 		ReadToken rToken = new ReadToken();
 		String token = rToken.readToken();
@@ -18,7 +20,7 @@ public class MessageListener extends ListenerAdapter {
 		jda.addEventListener(new MessageListener());
 
 		Databake db = new Databake("testDB.db");
-		
+		db.ExecuteStatement("CREATE TABLE IF NOT EXISTS SERVERS(id INTEGER NOT NULL, serverID INTEGER NOT NULL, ServerName INTEGER NOT NULL");
 	}
 
 	@Override
@@ -36,5 +38,12 @@ public class MessageListener extends ListenerAdapter {
 		if (event.isFromType(ChannelType.PRIVATE)) {
 
 		}
+	}
+	@Override
+	public void onGuildMemberJoin(GuildMemberJoinEvent event) {
+		/*
+		 * TODO: Setup what to do if someone Joins the Guild
+		 * 		( setup using the Database Allowing each server to Select what to do on a user join (Sending a Server Message or Direct message))
+		 */
 	}
 }
