@@ -14,8 +14,6 @@ public class Command {
 		/**
 		 * 
 		 * @author Zach
-		 * @param CommandString
-		 *            The Entire commandstring to run regex off of
 		 * 
 		 */
 		pat = Pattern.compile("^!(\\w*)");
@@ -34,6 +32,7 @@ public class Command {
 				break;
 			}
 		} catch (IllegalArgumentException e) {
+			// Return back the fact that Someone entered an Invalid command and return it back or exit silently
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.getStackTrace();
