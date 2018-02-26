@@ -25,15 +25,16 @@ public class Databake {
 	private Connection conn = null;
 	private Statement statement = null;
 	private ResultSet rs = null;
-
+	
+	/**
+	 * Creates the Requirements to Interact with a Database file. This will
+	 * automatically create the Database file if it does not already exist.
+	 * 
+	 * @param Filename The File to create (or access) the Database
+	 * 
+	 */
 	public Databake(String Filename) {
-		/**
-		 * Creates the Requirements to Interact with a Database file. This will
-		 * automatically create the Database file if it does not already exist.
-		 * 
-		 * @param Filename The File to create (or access) the Database
-		 * 
-		 */
+		
 		filename = Filename;
 		current_file = "./db/" + filename;
 
@@ -114,13 +115,14 @@ public class Databake {
 		}
 	}
 	
+	/**
+	 * Execute a returnable Query
+	 * @param sql A string of SQL to execute
+	 * @param print Boolean: Print to console the results of sql (Default: false)
+	 * @return ResultSet
+	 */
 	public ResultSet ExecuteQuery(String sql, boolean Print) {
-		/**
-		 * Execute a returnable Query
-		 * @param sql A string of SQL to execute
-		 * @param print Boolean: Print to console the results of sql (Default: false)
-		 * @return ResultSet
-		 */
+		
 		if (!Print) {
 			Print = false;
 		}
