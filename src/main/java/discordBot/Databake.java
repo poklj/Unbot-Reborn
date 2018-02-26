@@ -22,7 +22,7 @@ public class Databake {
 	private File constructedPath = null;
 	private File constructedFilePath = null;
 
-	private Connection conn = null;
+	protected Connection conn = null;
 	private Statement statement = null;
 	private ResultSet rs = null;
 	

@@ -50,7 +50,7 @@ public class MessageListener extends ListenerAdapter {
 			sProc.Check_Is_Known_server(event.getGuild().getId(), event.getGuild().getName());
 			if (Message.matches("^(!).*")) {
 				System.out.println("Command!");
-				cmd.Comd(Message);
+				cmd.Comd(Message, event.getGuild().getId());
 			}
 
 			System.out.printf("[%s][%s] %s: %s\n", event.getGuild().getName(), event.getTextChannel().getName(),
