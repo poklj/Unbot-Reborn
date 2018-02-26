@@ -1,5 +1,7 @@
 package discordBot;
 
+import java.awt.Event;
+import java.util.EventListener;
 import java.util.regex.Pattern;
 
 import javax.security.auth.login.LoginException;
@@ -13,10 +15,12 @@ import net.dv8tion.jda.core.*;
 import net.dv8tion.jda.core.exceptions.RateLimitedException;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
+
 // For Voice Synthisis use Dectalk
 public class MessageListener extends ListenerAdapter {
 	private static boolean print = true;
 	Command cmd = new Command();
+	ServerProc sProc = new ServerProc();
 
 	public static void main(String[] args) throws LoginException, RateLimitedException, InterruptedException {
 		ReadToken rToken = new ReadToken();
@@ -24,12 +28,13 @@ public class MessageListener extends ListenerAdapter {
 		JDA jda = new JDABuilder(AccountType.BOT).setToken(token).buildBlocking();
 		jda.addEventListener(new MessageListener());
 
-		Databake db = new Databake("testDB.db");
+		Databake db = new Databake("DatabakeBase.db");
 
 		// Setup Server Table
-		String Server = "CREATE TABLE IF NOT EXISTS SERVERS(ServerID INTEGER NOT NULL PRIMARY KEY, ServerName INTEGER NOT NULL);"
-				+ "COMMIT; ";
+		String Server = "CREATE TABLE IF NOT EXISTS SERVERS(ServerID INTEGER NOT NULL PRIMARY KEY, ServerName INTEGER NOT NULL);";
+		String OutputChannel = "CREATE TABLE IF NOT EXISTS OutputChannel(ServerID INTEGER NOT NULL, channelID INTEGER NOT NULL,FOREIGN KEY(ServerID) REFERENCES Servers(ServerID) );";
 		db.ExecuteStatement(Server);
+		db.ExecuteStatement(OutputChannel);
 		/*
 		 * TODO: Create the function to add Guilds to the database (Either prejoined or
 		 * Not)
@@ -42,6 +47,7 @@ public class MessageListener extends ListenerAdapter {
 			System.out.printf("[PM] %s: %s\n", event.getAuthor().getName(), event.getMessage().getContentDisplay());
 		} else {
 			String Message = event.getMessage().getContentDisplay();
+			sProc.Check_Is_Known_server(event.getGuild().getId(), event.getGuild().getName());
 			if (Message.matches("^(!).*")) {
 				System.out.println("Command!");
 				cmd.Comd(Message);

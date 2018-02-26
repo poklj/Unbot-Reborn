@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+
 import ch.qos.logback.core.layout.EchoLayout;
 
 public class Databake {
@@ -87,7 +88,7 @@ public class Databake {
 	
 	public void ExecuteStatement(String sql) {
 		/**
-		 * Execute an sql query with no returns
+		 * Execute an sql query with no returns, Mainly for Table creation and Destruction
 		 * @Param sql A String of SQL to execute
 		 */
 		try {
@@ -95,6 +96,21 @@ public class Databake {
 		}catch (SQLException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
+		}
+	}
+	/**
+	 * Execute an sql query, only attempting to see if It actually returns anything. Mostly for Existance checking
+	 * @Param sql A String of SQL to execute
+	 */
+	public boolean ExecuteTryFailStatement(String sql) {
+		
+		try {
+			statement.execute(sql);
+			return true;
+		}catch (SQLException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			return false;
 		}
 	}
 	
