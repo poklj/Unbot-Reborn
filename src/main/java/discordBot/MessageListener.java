@@ -7,7 +7,9 @@ import java.util.regex.Pattern;
 import javax.security.auth.login.LoginException;
 
 import net.dv8tion.jda.core.JDA;
+import net.dv8tion.jda.core.entities.Channel;
 import net.dv8tion.jda.core.entities.ChannelType;
+import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.events.message.MessageDeleteEvent;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.events.guild.member.GuildMemberJoinEvent;
@@ -15,20 +17,23 @@ import net.dv8tion.jda.core.*;
 import net.dv8tion.jda.core.exceptions.RateLimitedException;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
-
 // For Voice Synthisis use Dectalk
 public class MessageListener extends ListenerAdapter {
 	private static boolean print = true;
-	Command cmd = new Command();
-	ServerProc sProc = new ServerProc();
+	static Command cmd = null;
+	static ServerProc sProc = null;
+	protected static JDA jda = null;
+	private static Databake db;
 
 	public static void main(String[] args) throws LoginException, RateLimitedException, InterruptedException {
 		ReadToken rToken = new ReadToken();
 		String token = rToken.readToken();
-		JDA jda = new JDABuilder(AccountType.BOT).setToken(token).buildBlocking();
+		jda = new JDABuilder(AccountType.BOT).setToken(token).buildBlocking();
+		// JDA jda = new JDABuilder(AccountType.BOT).setToken(token).buildBlocking();
 		jda.addEventListener(new MessageListener());
-
-		Databake db = new Databake("DatabakeBase.db");
+		cmd = new Command(jda, db);
+		db = new Databake("DatabakeBase.db");
+		sProc = new ServerProc(db);
 
 		// Setup Server Table
 		String Server = "CREATE TABLE IF NOT EXISTS SERVERS(ServerID INTEGER NOT NULL PRIMARY KEY, ServerName INTEGER NOT NULL);";
@@ -74,7 +79,12 @@ public class MessageListener extends ListenerAdapter {
 		 */
 	}
 
-	public void SendMessage(String MessageContent) {
+	public void SendMessageByID(String ChannelID, String MessageContent) {
+		TextChannel channel = jda.getTextChannelById(ChannelID);
+		channel.sendMessage(MessageContent);
+	}
 
+	public Databake get_db() {
+		return this.db;
 	}
 }

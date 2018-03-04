@@ -12,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
 import ch.qos.logback.core.layout.EchoLayout;
 
 public class Databake {
@@ -25,16 +24,17 @@ public class Databake {
 	protected Connection conn = null;
 	private Statement statement = null;
 	private ResultSet rs = null;
-	
+
 	/**
 	 * Creates the Requirements to Interact with a Database file. This will
 	 * automatically create the Database file if it does not already exist.
 	 * 
-	 * @param Filename The File to create (or access) the Database
+	 * @param Filename
+	 *            The File to create (or access) the Database
 	 * 
 	 */
 	public Databake(String Filename) {
-		
+
 		filename = Filename;
 		current_file = "./db/" + filename;
 
@@ -50,8 +50,8 @@ public class Databake {
 			e.printStackTrace();
 		}
 
-		
-		// Run the Creation of the Database File or Connect to the file If it already exists
+		// Run the Creation of the Database File or Connect to the file If it already
+		// exists
 		if (!constructedFilePath.exists()) {
 			this.CreateNewDB();
 		} else {
@@ -86,43 +86,55 @@ public class Databake {
 		}
 
 	}
-	
+
+	/**
+	 * Execute an sql query with no returns, Mainly for Table creation and
+	 * Destruction
+	 * 
+	 * @Param sql A String of SQL to execute
+	 */
+
 	public void ExecuteStatement(String sql) {
-		/**
-		 * Execute an sql query with no returns, Mainly for Table creation and Destruction
-		 * @Param sql A String of SQL to execute
-		 */
+
 		try {
+
 			statement.execute(sql);
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
+
 	}
+
 	/**
-	 * Execute an sql query, only attempting to see if It actually returns anything. Mostly for Existance checking
+	 * Execute an sql query, only attempting to see if It actually returns anything.
+	 * Mostly for Existance checking
+	 * 
 	 * @Param sql A String of SQL to execute
 	 */
 	public boolean ExecuteTryFailStatement(String sql) {
-		
+
 		try {
 			statement.execute(sql);
 			return true;
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Execute a returnable Query
-	 * @param sql A string of SQL to execute
-	 * @param print Boolean: Print to console the results of sql (Default: false)
+	 * 
+	 * @param sql
+	 *            A string of SQL to execute
+	 * @param print
+	 *            Boolean: Print to console the results of sql (Default: false)
 	 * @return ResultSet
 	 */
 	public ResultSet ExecuteQuery(String sql, boolean Print) {
-		
+
 		if (!Print) {
 			Print = false;
 		}
@@ -137,11 +149,11 @@ public class Databake {
 		}
 		return rs;
 	}
-	
+
 	public ResultSet getPreviousResultSet() {
-		return rs;		
+		return rs;
 	}
-	
+
 	public File getConstructedPath() {
 		return constructedPath;
 	}
