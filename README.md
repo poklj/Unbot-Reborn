@@ -8,7 +8,7 @@ SQLite JDBC: [Link](https://bitbucket.org/xerial/sqlite-jdbc)
 ## Roadmap
 
 - [x] Create a Database for the Bot
-    - [ ] Implement Auto Server value insertion (Server Id and Name) On Server join and Pre-Existing (Should the Database be dropped, Allow the bot to Rebuild from Guilds it's a member of)
+    - [x] Implement Auto Server value insertion (Server Id and Name) On Server join and Pre-Existing (Should the Database be dropped, Allow the bot to Rebuild from Guilds it's a member of)
 - [x] Create an Extendable command Skeleton
 - [ ] Implement per Server Welcome Messages (Both through PM and within the Guild)
 - [ ] Implement Role Granting using Commands or Reaction to Emote to Assign roles
